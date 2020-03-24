@@ -64,7 +64,7 @@ final class JsonSerializer implements Serializer
                 default:
                     throw new SerializationException(\json_last_error_msg(), $code);
             }
-        } catch (\JsonException $exception) {
+        } catch (\Throwable $exception) {
             throw new SerializationException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
@@ -81,7 +81,7 @@ final class JsonSerializer implements Serializer
                 default:
                     throw new SerializationException(\json_last_error_msg(), $code);
             }
-        } catch (\JsonException $exception) {
+        } catch (\Throwable $exception) {
             throw new SerializationException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
