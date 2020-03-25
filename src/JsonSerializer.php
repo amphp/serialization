@@ -4,6 +4,9 @@ namespace Amp\Serialization;
 
 final class JsonSerializer implements Serializer
 {
+    // Equal to JSON_THROW_ON_ERROR, only available in PHP 7.3+.
+    private const THROW_ON_ERROR = 4194304;
+
     /** @var bool */
     private $associative;
 
@@ -47,42 +50,36 @@ final class JsonSerializer implements Serializer
     private function __construct(bool $associative, int $encodeOptions = 0, int $decodeOptions = 0, int $depth = 512)
     {
         $this->associative = $associative;
-        $this->encodeOptions = $encodeOptions;
-        $this->decodeOptions = $decodeOptions;
         $this->depth = $depth;
+
+        // We don't want to throw on errors, we manually check for errors using json_last_error().
+        $this->encodeOptions = $encodeOptions & ~self::THROW_ON_ERROR;
+        $this->decodeOptions = $decodeOptions & ~self::THROW_ON_ERROR;
     }
 
     public function serialize($data): string
     {
-        try {
-            $result = \json_encode($data, $this->encodeOptions, $this->depth);
+        $result = \json_encode($data, $this->encodeOptions, $this->depth);
 
-            switch ($code = \json_last_error()) {
-                case \JSON_ERROR_NONE:
-                    return $result;
+        switch ($code = \json_last_error()) {
+            case \JSON_ERROR_NONE:
+                return $result;
 
-                default:
-                    throw new SerializationException(\json_last_error_msg(), $code);
-            }
-        } catch (\Throwable $exception) {
-            throw new SerializationException($exception->getMessage(), $exception->getCode(), $exception);
+            default:
+                throw new SerializationException(\json_last_error_msg(), $code);
         }
     }
 
     public function unserialize(string $data)
     {
-        try {
-            $result = \json_decode($data, $this->associative, $this->depth, $this->decodeOptions);
+        $result = \json_decode($data, $this->associative, $this->depth, $this->decodeOptions);
 
-            switch ($code = \json_last_error()) {
-                case \JSON_ERROR_NONE:
-                    return $result;
+        switch ($code = \json_last_error()) {
+            case \JSON_ERROR_NONE:
+                return $result;
 
-                default:
-                    throw new SerializationException(\json_last_error_msg(), $code);
-            }
-        } catch (\Throwable $exception) {
-            throw new SerializationException($exception->getMessage(), $exception->getCode(), $exception);
+            default:
+                throw new SerializationException(\json_last_error_msg(), $code);
         }
     }
 }

@@ -7,8 +7,8 @@ use Amp\Serialization\Serializer;
 
 class CompressingJsonSerializerTest extends JsonSerializerTest
 {
-    protected function createSerializer(): Serializer
+    protected function createSerializer(int $encodeOptions = 0, int $decodeOptions = 0): Serializer
     {
-        return new CompressingSerializer(parent::createSerializer());
+        return new CompressingSerializer(parent::createSerializer($encodeOptions, $decodeOptions));
     }
 }
