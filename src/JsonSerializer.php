@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Amp\Serialization;
 
@@ -15,8 +15,6 @@ final class JsonSerializer implements Serializer
      * @param int $encodeOptions {@see \json_encode()} options parameter.
      * @param int $decodeOptions {@see \json_decode()} options parameter.
      * @param int $depth Maximum recursion depth.
-     *
-     * @return self
      */
     public static function withAssociativeArrays(int $encodeOptions = 0, int $decodeOptions = 0, int $depth = 512): self
     {
@@ -29,8 +27,6 @@ final class JsonSerializer implements Serializer
      * @param int $encodeOptions {@see \json_encode()} options parameter.
      * @param int $decodeOptions {@see \json_decode()} options parameter.
      * @param int $depth Maximum recursion depth.
-     *
-     * @return self
      */
     public static function withObjects(int $encodeOptions = 0, int $decodeOptions = 0, int $depth = 512): self
     {
