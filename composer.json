@@ -26,7 +26,8 @@
         "ext-json": "*",
         "ext-zlib": "*",
         "phpunit/phpunit": "^9",
-        "amphp/php-cs-fixer-config": "^2"
+        "amphp/php-cs-fixer-config": "^2",
+        "psalm/phar": "5.4"
     },
     "autoload": {
         "psr-4": {

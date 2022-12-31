@@ -5,6 +5,8 @@ namespace Amp\Serialization;
 interface Serializer
 {
     /**
+     * @param mixed $data Serializable PHP value.
+     *
      * @throws SerializationException
      */
     public function serialize($data): string;
