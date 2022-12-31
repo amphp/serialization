@@ -31,6 +31,7 @@ final class CompressingSerializer implements Serializer
             } finally {
                 \restore_error_handler();
             }
+
             if ($serializedData === false) {
                 $error = \error_get_last();
                 throw new SerializationException('Could not compress data: ' . ($error['message'] ?? 'unknown error'));
@@ -44,6 +45,10 @@ final class CompressingSerializer implements Serializer
 
     public function unserialize(string $data)
     {
+        if ($data === '') {
+            throw new SerializationException('Empty string provided');
+        }
+
         $firstByte = \ord($data[0]);
         $data = \substr($data, 1);
 
@@ -54,6 +59,7 @@ final class CompressingSerializer implements Serializer
             } finally {
                 \restore_error_handler();
             }
+
             if ($data === false) {
                 $error = \error_get_last();
                 throw new SerializationException('Could not decompress data: ' . ($error['message'] ?? 'unknown error'));
