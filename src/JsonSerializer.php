@@ -39,20 +39,16 @@ final class JsonSerializer implements Serializer
         $this->depth = $depth;
 
         // We always want to throw on errors.
-        $this->encodeOptions = $encodeOptions | JSON_THROW_ON_ERROR;
+        $this->encodeOptions = $encodeOptions | \JSON_THROW_ON_ERROR;
         $this->decodeOptions = $decodeOptions | \JSON_THROW_ON_ERROR;
     }
 
     public function serialize($data): string
     {
-        $result = \json_encode($data, $this->encodeOptions, $this->depth);
-
-        switch ($code = \json_last_error()) {
-            case \JSON_ERROR_NONE:
-                return $result;
-
-            default:
-                throw new SerializationException(\json_last_error_msg(), $code);
+        try {
+            return \json_encode($data, $this->encodeOptions, $this->depth);
+        } catch (\JsonException $e) {
+            throw new SerializationException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
