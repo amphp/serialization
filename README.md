@@ -11,7 +11,7 @@ AMPHP is a collection of event-driven libraries for PHP designed with fibers and
 This package can be installed as a [Composer](https://getcomposer.org/) dependency.
 
 ```bash
-composer require amphp/socket
+composer require amphp/serialization
 ```
 
 ## Serializer
