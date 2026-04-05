@@ -2,6 +2,9 @@
 
 namespace Amp\Serialization;
 
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 class SerializationException extends \Exception
 {
 }

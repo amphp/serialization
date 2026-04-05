@@ -43,10 +43,14 @@ final class JsonSerializer implements Serializer
         $this->decodeOptions = $decodeOptions | \JSON_THROW_ON_ERROR;
     }
 
+    /**
+     * @psalm-suppress InvalidFalsableReturnType $this->encodeOptions always contains JSON_THROW_ON_ERROR.
+     */
     #[\Override]
     public function serialize($data): string
     {
         try {
+            /** @psalm-suppress ArgumentTypeCoercion, FalsableReturnStatement */
             return \json_encode($data, $this->encodeOptions, $this->depth);
         } catch (\JsonException $e) {
             throw new SerializationException($e->getMessage(), $e->getCode(), $e);
@@ -57,6 +61,7 @@ final class JsonSerializer implements Serializer
     public function unserialize(string $data)
     {
         try {
+            /** @psalm-suppress ArgumentTypeCoercion, FalsableReturnStatement */
             return \json_decode($data, $this->associative, $this->depth, $this->decodeOptions);
         } catch (\JsonException $e) {
             throw new SerializationException($e->getMessage(), $e->getCode(), $e);

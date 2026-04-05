@@ -53,6 +53,7 @@ final class CompressingSerializer implements Serializer
 
         $firstByte = \ord($data[0]);
         $data = \substr($data, 1);
+        \assert(\is_string($data));
 
         if ($firstByte & self::FLAG_COMPRESSED) {
             \set_error_handler($this->errorHandler);
@@ -61,11 +62,11 @@ final class CompressingSerializer implements Serializer
             } finally {
                 \restore_error_handler();
             }
+        }
 
-            if ($data === false) {
-                $error = \error_get_last();
-                throw new SerializationException('Could not decompress data: ' . ($error['message'] ?? 'unknown error'));
-            }
+        if ($data === false) {
+            $error = \error_get_last();
+            throw new SerializationException('Could not decompress data: ' . ($error['message'] ?? 'unknown error'));
         }
 
         return $this->serializer->unserialize($data);
