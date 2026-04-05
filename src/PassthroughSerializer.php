@@ -4,6 +4,7 @@ namespace Amp\Serialization;
 
 final class PassthroughSerializer implements Serializer
 {
+    #[\Override]
     public function serialize($data): string
     {
         if (!\is_string($data)) {
@@ -13,6 +14,7 @@ final class PassthroughSerializer implements Serializer
         return $data;
     }
 
+    #[\Override]
     public function unserialize(string $data): string
     {
         return $data;

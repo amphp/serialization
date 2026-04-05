@@ -16,6 +16,7 @@ final class NativeSerializer implements Serializer
         $this->allowedClasses = $allowedClasses;
     }
 
+    #[\Override]
     public function serialize($data): string
     {
         try {
@@ -29,6 +30,7 @@ final class NativeSerializer implements Serializer
         }
     }
 
+    #[\Override]
     public function unserialize(string $data)
     {
         try {

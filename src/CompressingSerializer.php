@@ -18,6 +18,7 @@ final class CompressingSerializer implements Serializer
         $this->errorHandler = static fn () => true;
     }
 
+    #[\Override]
     public function serialize($data): string
     {
         $serializedData = $this->serializer->serialize($data);
@@ -43,6 +44,7 @@ final class CompressingSerializer implements Serializer
         return \chr($flags & 0xff) . $serializedData;
     }
 
+    #[\Override]
     public function unserialize(string $data)
     {
         if ($data === '') {

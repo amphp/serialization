@@ -43,6 +43,7 @@ final class JsonSerializer implements Serializer
         $this->decodeOptions = $decodeOptions | \JSON_THROW_ON_ERROR;
     }
 
+    #[\Override]
     public function serialize($data): string
     {
         try {
@@ -52,6 +53,7 @@ final class JsonSerializer implements Serializer
         }
     }
 
+    #[\Override]
     public function unserialize(string $data)
     {
         try {
