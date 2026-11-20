@@ -27,7 +27,7 @@
         "ext-zlib": "*",
         "phpunit/phpunit": "^9",
         "amphp/php-cs-fixer-config": "^2",
-        "psalm/phar": "6.16.1"
+        "psalm/phar": "7.9.0"
     },
     "autoload": {
         "psr-4": {
